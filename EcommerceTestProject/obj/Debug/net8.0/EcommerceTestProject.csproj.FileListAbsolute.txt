@@ -101,3 +101,4 @@ C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\n
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\EcommerceTestProject.pdb
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\EcommerceTestProject.genruntimeconfig.cache
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\ref\EcommerceTestProject.dll
+C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\EcommerceTestProject.sourcelink.json
