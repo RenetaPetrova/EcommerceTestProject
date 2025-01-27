@@ -45,5 +45,5 @@ Automated UI testing project for the Ozone.bg e-commerce website using Selenium 
 MIT License
 
 ## Documentation
-- [Test Cases](docs/test-cases.md)
+- [Test Cases](test-cases.md)
 
