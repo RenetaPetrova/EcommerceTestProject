@@ -39,3 +39,47 @@ _No test data required for this test case._
 ## Additional Notes
 - The test uses Selenium WebDriver with implicit and explicit waits to handle dynamic loading elements.
 - The test uses `Assert.Multiple()` to ensure all verifications are performed even if one fails.
+
+# Test Case: Verify Search Functionality
+
+**Test Case ID:** TC-002  
+**Title:** Verify Search Functionality  
+
+## Objective
+Ensure that the search bar returns relevant product results when a keyword is entered.
+
+## Preconditions
+- The user has access to the Ozone.bg website.
+- The homepage is loaded successfully.
+- A valid product keyword exists (e.g., "Големак").
+
+## Test Steps
+1. Navigate to `https://www.ozone.bg`.
+2. Use the search function by entering the keyword "Големак".
+3. Click the search button.
+4. Verify that the search results page is displayed.
+5. Validate that the search results contain the keyword in the header.
+6. Check that the search results container is visible.
+7. Assert that at least one search result item (`<li>`) is present in the search results.
+8. Confirm the first product is displayed.
+
+## Expected Result
+- The search results page should load successfully.
+- The keyword "Големак" should be present in the results header.
+- At least one search result should be displayed.
+- The first product in the results should be visible.
+
+## Test Data
+- **Search Query:** "Големак"
+- **Expected Results Header Text:** Contains the search query.
+- **Minimum Search Results Expected:** At least 1.
+
+## Pass/Fail Criteria
+- **Pass:** If the search results page loads correctly, the search query appears in the header, and at least one product is displayed.
+- **Fail:** If the search query is missing in the results header, or no search results are shown.
+
+## Additional Notes
+- The test is executed using the Chrome browser with Selenium WebDriver.
+- Implicit and explicit waits are used to handle page load times.
+- The search function is validated under normal network conditions.
+
