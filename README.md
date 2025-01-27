@@ -15,10 +15,11 @@ Automated UI testing project for the Ozone.bg e-commerce website using Selenium 
 
 ## Project Structure
 - `EcommerceTests.cs`: Contains test cases for Ozone.bg website
-- Currently implements homepage load verification test
+- Currently implements homepage load verification and search functionality tests
 
 ## Test Cases
-- `Verify_HomePage_LoadsWithKeyElements()`: Validates homepage loads with expected elements
+- `Verify_HomePage_LoadsWithKeyElements()`: Validates homepage loads with expected elements.
+- `Verify_Search_Functionality()`: Ensures that the search feature works correctly and displays relevant products.
 
 ## Setup Instructions
 1. Clone the repository
@@ -40,10 +41,11 @@ Automated UI testing project for the Ozone.bg e-commerce website using Selenium 
 
 ## Future Improvements
 - Add more test scenarios
+- Implement negative test cases
+- Enhance test coverage for checkout and payment flows
 
 ## License
 MIT License
 
 ## Documentation
 - [Test Cases](test-cases.md)
-
