@@ -102,3 +102,4 @@ C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\n
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\EcommerceTestProject.genruntimeconfig.cache
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\ref\EcommerceTestProject.dll
 C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\obj\Debug\net8.0\EcommerceTestProject.sourcelink.json
+C:\Users\Reni\source\repos\EcommerceTestProject\EcommerceTestProject\bin\Debug\net8.0\SeleniumExtras.WaitHelpers.dll

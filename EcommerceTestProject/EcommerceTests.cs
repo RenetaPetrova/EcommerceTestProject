@@ -1,8 +1,6 @@
-using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using System;
 
 namespace EcommerceTestAutomation
 {
@@ -13,8 +11,8 @@ namespace EcommerceTestAutomation
         private WebDriverWait wait;
         private string baseUrl = "https://www.ozone.bg";
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
@@ -22,8 +20,8 @@ namespace EcommerceTestAutomation
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        [Test, Order (1)]
-        public void Verify_HomePage_LoadsWithKeyElements()
+        [Test]
+        public void VerifyHomePageLoadsWithKeyElements()
         {
             IWebElement logo = wait.Until(d => d.FindElement(By.CssSelector("a.logo")));
             IWebElement searchBox = wait.Until(d => d.FindElement(By.Name("q")));
@@ -46,16 +44,70 @@ namespace EcommerceTestAutomation
             });
         }
 
-        [Test, Order (2)]
-        public void Verify_Search_Functionality()
+        [Test]
+        public void VerifySearchFunctionality()
         {
             string searchQuery = "Големак";
 
-            // Use the search helper method
+            SearchForProduct(searchQuery);
+
+            IWebElement resultsHeader = wait.Until(d => d.FindElement(By.XPath("//span[@id='isp_results_search_text']")));
+            Assert.IsTrue(resultsHeader.Displayed, "Search results header is not displayed.");
+
+            string resultsText = resultsHeader.Text.Trim();
+            Assert.IsTrue(resultsText.Contains(searchQuery, StringComparison.OrdinalIgnoreCase),
+                $"Expected search query '{searchQuery}' was not found in the results header. Found: {resultsText}");
+
+            IWebElement searchResultsContainer = wait.Until(d => d.FindElement(By.Id("isp_search_results_container")));
+
+            IReadOnlyCollection<IWebElement> searchResults = searchResultsContainer.FindElements(By.XPath(".//li"));
+
+            Assert.IsTrue(searchResults.Count > 0, "No search results were found.");
+
+            IWebElement firstProduct = searchResults.First();
+            Assert.IsTrue(firstProduct.Displayed, "The first search result is not displayed.");
+        }
+
+        [Test]
+        public void VerifyAddToCardFunctionality()
+        {
+            string searchQuery = "Големак";
+
+            SearchForProduct(searchQuery);
+
+            IWebElement resultsHeader = wait.Until(d => d.FindElement(By.XPath("//span[@id='isp_results_search_text']")));
+            Assert.IsTrue(resultsHeader.Displayed, "Search results header is not displayed.");
+
+            string resultsText = resultsHeader.Text.Trim();
+            Assert.IsTrue(resultsText.Contains(searchQuery, StringComparison.OrdinalIgnoreCase),
+                $"Expected search query '{searchQuery}' was not found in the results header. Found: {resultsText}");
+
+            IWebElement searchResultsContainer = wait.Until(d => d.FindElement(By.Id("isp_search_results_container")));
+
+            IReadOnlyCollection<IWebElement> searchResults = searchResultsContainer.FindElements(By.XPath(".//li"));
+
+            Assert.IsTrue(searchResults.Count > 0, "No search results were found.");
+
+            IWebElement firstProduct = searchResults.First();
+
+            IWebElement addToCartButton = driver.FindElement(By.XPath("//input[@class='isp_add_to_cart_btn']"));
+            addToCartButton.Click();
+
+            IWebElement toastMessage = wait.Until(d => d.FindElement(By.XPath("//div[@class='iziToast-texts']/p[@class='iziToast-message slideIn']")));
+
+            string toastText = toastMessage.Text.Trim();
+            Assert.That(toastText, Is.EqualTo("Големак беше успешно добавен в количката"), $"Expected toast message was not {toastText}");
+
+        }
+
+        [Test]
+        public void VerifyRemoveFromCardFunctionality()
+        {
+            string searchQuery = "Големак";
             SearchForProduct(searchQuery);
 
             // Verify that the search results page is displayed
-            IWebElement resultsHeader = wait.Until(d => d.FindElement(By.XPath("//span[@id='isp_results_search_text']")));
+            IWebElement resultsHeader = driver.FindElement(By.XPath("//span[@id='isp_results_search_text']"));
             Assert.IsTrue(resultsHeader.Displayed, "Search results header is not displayed.");
 
             // Verify that the search results contain the keyword
@@ -63,19 +115,23 @@ namespace EcommerceTestAutomation
             Assert.IsTrue(resultsText.Contains(searchQuery, StringComparison.OrdinalIgnoreCase),
                 $"Expected search query '{searchQuery}' was not found in the results header. Found: {resultsText}");
 
-            // Wait for the search results container to be present
-            IWebElement searchResultsContainer = wait.Until(d => d.FindElement(By.Id("isp_search_results_container")));
+            IWebElement addToCardButton = driver.FindElement(By.XPath("//input[@class='isp_add_to_cart_btn']"));
+            addToCardButton.Click();
 
-            // Get the list of search result items (li elements)
-            IReadOnlyCollection<IWebElement> searchResults = searchResultsContainer.FindElements(By.XPath(".//li"));
+            IWebElement cartButton = wait.Until(d => d.FindElement(By.XPath("//a[@class='mini-cart-open clever-link-cart']")));
+            cartButton.Click();
 
-            // Assert that there is at least one result
-            Assert.IsTrue(searchResults.Count > 0, "No search results were found.");
+            Assert.That(driver.Url, Is.EqualTo("https://www.ozone.bg/checkout/cart/"));
 
-            // Verify the first product is displayed in the list
-            IWebElement firstProduct = searchResults.First();
-            Assert.IsTrue(firstProduct.Displayed, "The first search result is not displayed.");
+            //ElementToBeClickable
+            IWebElement removeIcon = wait.Until(d => d.FindElement(By.XPath("//a[contains(@href, '/checkout/cart/delete/')]")));
+            removeIcon.Click();
+
+            IWebElement emptyCartMessage = wait.Until(d => d.FindElement(By.XPath("//div[@class='shopping-cart-content']//h1")));
+            string emptyCartMessageText = emptyCartMessage.Text.Trim();
+            Assert.That(emptyCartMessageText, Is.EqualTo("Количката ти е празна"), $"Expected toast message was not {emptyCartMessageText}");
         }
+
 
         private void SearchForProduct(string searchQuery)
         {
@@ -86,8 +142,8 @@ namespace EcommerceTestAutomation
             searchButton.Click();
         }
 
-          [TearDown]
-        public void TearDown()
+          [OneTimeTearDown]
+        public void OneTimeTearDown()
         {
             if (driver != null)
             {
