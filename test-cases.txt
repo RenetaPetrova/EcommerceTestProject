@@ -1,0 +1,82 @@
+# E-Commerce Test Cases for Ozone.bg
+
+## Test Case TC-001: Verify Home Page Loads with Key Elements
+
+### Description
+Ensure that the homepage loads correctly with key UI elements present.
+
+### Steps to Execute
+1. Navigate to Ozone.bg
+2. Check if the following elements are displayed:
+   - Logo (`a.logo`)
+   - Search Box (`input[name='q']`)
+   - Categories Button (`div[@class='open-main-cat-nav-wrapper js-opening']`)
+   - Offers Button (`li a[href='/oferti-po-kategoriya/']`)
+   - Our Stores Button (`a[title='Нашите магазини']`)
+
+### Expected Result
+- The page title should be `Mагазин за игри, книги, геймърски аксесоари и играчки | Ozone.bg`
+- All key elements should be visible
+
+## Test Case TC-002: Verify Search Functionality
+
+### Description
+Ensure that users can search for a product and view relevant results.
+
+### Steps to Execute
+1. Navigate to the homepage
+2. Enter "Големак" in the search bar
+3. Click the Search button
+4. Verify that the search results page is displayed
+5. Verify that the search results contain the keyword "Големак"
+6. Ensure that search results are listed
+7. Verify that the first product is displayed
+
+### Expected Result
+- Search results page loads successfully
+- The first search result should contain the product "Големак"
+
+## Test Case TC-003: Verify Add to Cart Functionality
+
+### Description
+Ensure that users can add a product to the cart and see a confirmation message.
+
+### Steps to Execute
+1. Search for the product "Големак"
+2. Click the Add to Cart button (`input[@class='isp_add_to_cart_btn']`)
+3. Verify that a toast message appears confirming the addition
+
+### Expected Result
+- A confirmation message should appear: "Големак беше успешно добавен в количката"
+
+## Test Case TC-004: Verify Remove from Cart Functionality
+
+### Description
+Ensure that users can remove a product from the cart successfully.
+
+### Steps to Execute
+1. Add "Големак" to the cart
+2. Open the cart (`a[@class='mini-cart-open clever-link-cart']`)
+3. Verify that the cart page URL is correct (`https://www.ozone.bg/checkout/cart/`)
+4. Click the Remove item button (`a[contains(@href, '/checkout/cart/delete/')]`)
+5. Verify that the cart is now empty
+
+### Expected Result
+- The cart should display the message: "Количката ти е празна"
+
+## Test Case TC-005: Verify Product Details Page
+
+### Description
+Ensure that the product details page loads correctly and displays the correct information.
+
+### Steps to Execute
+1. Search for the product "Големак"
+2. Click on the product image
+3. Verify that the product details page loads
+4. Verify the following details:
+   - URL: `https://www.ozone.bg/product/golemak/`
+   - Product title: `Големак` (`h1[@itemprop='name']`)
+   - Author: `Петя Петрова` (`a[text()='Петя Петрова']`)
+
+### Expected Result
+- The product details page should display the correct title, author, and URL

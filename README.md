@@ -18,8 +18,11 @@ Automated UI testing project for the Ozone.bg e-commerce website using Selenium 
 - Currently implements homepage load verification and search functionality tests
 
 ## Test Cases
-- `Verify_HomePage_LoadsWithKeyElements()`: Validates homepage loads with expected elements.
-- `Verify_Search_Functionality()`: Ensures that the search feature works correctly and displays relevant products.
+- Verify_HomePage_LoadsWithKeyElements(): Validates that the homepage loads successfully with all expected UI elements present.
+- Verify_Search_Functionality(): Ensures that the search feature works correctly and displays relevant products.
+- Verify_AddToCart_Functionality(): Confirms that users can add a product to the cart and receive a confirmation message.
+- Verify_RemoveFromCart_Functionality(): Ensures that users can remove a product from the cart and verify that the cart is empty.
+- Verify_ProductDetails(): Confirms that the product details page loads correctly, displaying the correct product title, author, and URL.
 
 ## Setup Instructions
 1. Clone the repository
