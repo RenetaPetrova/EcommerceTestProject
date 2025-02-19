@@ -43,9 +43,8 @@ Automated UI testing project for the Ozone.bg e-commerce website using Selenium 
 - ChromeDriver
 
 ## Future Improvements
-- Add more test scenarios
-- Implement negative test cases
-- Enhance test coverage for checkout and payment flows
+I will continue working on the project once I learn how to bypass CAPTCHA because currently, I cannot register new users nor log in existing ones.
+
 
 ## License
 MIT License
