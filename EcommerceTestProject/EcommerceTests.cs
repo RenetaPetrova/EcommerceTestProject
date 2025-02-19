@@ -1,3 +1,4 @@
+п»їusing Bogus;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -11,7 +12,7 @@ namespace EcommerceTestAutomation
         private WebDriverWait wait;
         private string baseUrl = "https://www.ozone.bg";
 
-        [OneTimeSetUp]
+        [SetUp]
         public void OneTimeSetUp()
         {
             driver = new ChromeDriver();
@@ -27,13 +28,13 @@ namespace EcommerceTestAutomation
             IWebElement searchBox = wait.Until(d => d.FindElement(By.Name("q")));
             IWebElement catButton = wait.Until(d => d.FindElement(By.XPath("//div[@class='open-main-cat-nav-wrapper js-opening']")));
             IWebElement offerButton = wait.Until(d => d.FindElement(By.CssSelector("li a[href='/oferti-po-kategoriya/']")));
-            IWebElement storesButton = wait.Until(d => d.FindElement(By.CssSelector("a[title='Нашите магазини']")));
+            IWebElement storesButton = wait.Until(d => d.FindElement(By.CssSelector("a[title='РќР°С€РёС‚Рµ РјР°РіР°Р·РёРЅРё']")));
 
             Assert.Multiple(() =>
             {
                 // Verify page title
-                Assert.That(driver.Title, Is.EqualTo("Mагазин за игри, книги, геймърски аксесоари и играчки | Ozone.bg"),
-                    $"Expected title was 'Mагазин за игри, книги, геймърски аксесоари и играчки | Ozone.bg', but found '{driver.Title}'");
+                Assert.That(driver.Title, Is.EqualTo("MР°РіР°Р·РёРЅ Р·Р° РёРіСЂРё, РєРЅРёРіРё, РіРµР№РјСЉСЂСЃРєРё Р°РєСЃРµСЃРѕР°СЂРё Рё РёРіСЂР°С‡РєРё | Ozone.bg"),
+                    $"Expected title was 'MР°РіР°Р·РёРЅ Р·Р° РёРіСЂРё, РєРЅРёРіРё, РіРµР№РјСЉСЂСЃРєРё Р°РєСЃРµСЃРѕР°СЂРё Рё РёРіСЂР°С‡РєРё | Ozone.bg', but found '{driver.Title}'");
 
                 // Verify elements are displayed
                 Assert.IsTrue(logo.Displayed, "The logo is not found.");
@@ -47,7 +48,7 @@ namespace EcommerceTestAutomation
         [Test]
         public void VerifySearchFunctionality()
         {
-            string searchQuery = "Големак";
+            string searchQuery = "Р“РѕР»РµРјР°Рє";
 
             SearchForProduct(searchQuery);
 
@@ -71,7 +72,7 @@ namespace EcommerceTestAutomation
         [Test]
         public void VerifyAddToCardFunctionality()
         {
-            string searchQuery = "Големак";
+            string searchQuery = "Р“РѕР»РµРјР°Рє";
 
             SearchForProduct(searchQuery);
 
@@ -96,14 +97,14 @@ namespace EcommerceTestAutomation
             IWebElement toastMessage = wait.Until(d => d.FindElement(By.XPath("//div[@class='iziToast-texts']/p[@class='iziToast-message slideIn']")));
 
             string toastText = toastMessage.Text.Trim();
-            Assert.That(toastText, Is.EqualTo("Големак беше успешно добавен в количката"), $"Expected toast message was not {toastText}");
+            Assert.That(toastText, Is.EqualTo("Р“РѕР»РµРјР°Рє Р±РµС€Рµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІРµРЅ РІ РєРѕР»РёС‡РєР°С‚Р°"), $"Expected toast message was not {toastText}");
 
         }
 
         [Test]
         public void VerifyRemoveFromCardFunctionality()
         {
-            string searchQuery = "Големак";
+            string searchQuery = "Р“РѕР»РµРјР°Рє";
             SearchForProduct(searchQuery);
 
             // Verify that the search results page is displayed
@@ -121,7 +122,7 @@ namespace EcommerceTestAutomation
             IWebElement cartButton = wait.Until(d => d.FindElement(By.XPath("//a[@class='mini-cart-open clever-link-cart']")));
             cartButton.Click();
 
-            Assert.That(driver.Url, Is.EqualTo("https://www.ozone.bg/checkout/cart/"));
+            Assert.That(driver.Url, Is.EqualTo("https://www.ozone.bg/checkout/cart/"), "URL does not match.");
 
             //ElementToBeClickable
             IWebElement removeIcon = wait.Until(d => d.FindElement(By.XPath("//a[contains(@href, '/checkout/cart/delete/')]")));
@@ -129,20 +130,49 @@ namespace EcommerceTestAutomation
 
             IWebElement emptyCartMessage = wait.Until(d => d.FindElement(By.XPath("//div[@class='shopping-cart-content']//h1")));
             string emptyCartMessageText = emptyCartMessage.Text.Trim();
-            Assert.That(emptyCartMessageText, Is.EqualTo("Количката ти е празна"), $"Expected toast message was not {emptyCartMessageText}");
+            Assert.That(emptyCartMessageText, Is.EqualTo("РљРѕР»РёС‡РєР°С‚Р° С‚Рё Рµ РїСЂР°Р·РЅР°"), $"Expected toast message was not {emptyCartMessageText}");
         }
 
+        [Test]
+        public void VerifyProductDetails()
+        {
+            string searchQuery = "Р“РѕР»РµРјР°Рє";
+            SearchForProduct(searchQuery);
 
+            // Verify that the search results page is displayed
+            IWebElement resultsHeader = driver.FindElement(By.XPath("//span[@id='isp_results_search_text']"));
+            Assert.IsTrue(resultsHeader.Displayed, "Search results header is not displayed.");
+
+            // Verify that the search results contain the keyword
+            string resultsText = resultsHeader.Text.Trim();
+            Assert.IsTrue(resultsText.Contains(searchQuery, StringComparison.OrdinalIgnoreCase),
+                $"Expected search query '{searchQuery}' was not found in the results header. Found: {resultsText}");
+
+            IWebElement bookImage = driver.FindElement(By.XPath("//img[@class='isp_product_image']"));
+            bookImage.Click();
+
+            IWebElement bookTitle = driver.FindElement(By.XPath("//div[@class='col-xs-5 middle-info']//h1[@itemprop='name']"));
+            IWebElement bookAuthor = driver.FindElement(By.XPath("//a[text()='РџРµС‚СЏ РџРµС‚СЂРѕРІР°']"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(driver.Url, Is.EqualTo("https://www.ozone.bg/product/golemak/"), "URL does not match.");
+                Assert.That(bookTitle.Text.Trim(), Is.EqualTo("Р“РѕР»РµРјР°Рє"), "Product title does not match.");
+                Assert.That(bookAuthor.Text.Trim(), Is.EqualTo("РџРµС‚СЏ РџРµС‚СЂРѕРІР°"), "Book author does not match.");
+            });
+
+        }
         private void SearchForProduct(string searchQuery)
         {
             IWebElement searchBox = wait.Until(d => d.FindElement(By.Name("q")));
             searchBox.Clear();
             searchBox.SendKeys(searchQuery);
-            IWebElement searchButton = driver.FindElement(By.CssSelector("button[title='Търси']"));
+            IWebElement searchButton = driver.FindElement(By.CssSelector("button[title='РўСЉСЂСЃРё']"));
             searchButton.Click();
         }
 
-          [OneTimeTearDown]
+
+
+          [TearDown]
         public void OneTimeTearDown()
         {
             if (driver != null)

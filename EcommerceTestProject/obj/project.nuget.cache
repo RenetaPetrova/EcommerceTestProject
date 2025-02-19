@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "U1PoO4/HPXI=",
+  "dgSpecHash": "4JjK5uWNrOg=",
   "success": true,
   "projectFilePath": "C:\\Users\\Reni\\source\\repos\\EcommerceTestProject\\EcommerceTestProject\\EcommerceTestProject.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Reni\\.nuget\\packages\\bogus\\35.6.1\\bogus.35.6.1.nupkg.sha512",
     "C:\\Users\\Reni\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Reni\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
     "C:\\Users\\Reni\\.nuget\\packages\\microsoft.net.test.sdk\\17.8.0\\microsoft.net.test.sdk.17.8.0.nupkg.sha512",
